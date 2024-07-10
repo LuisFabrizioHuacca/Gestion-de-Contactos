@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
@@ -79,6 +80,33 @@ void mostrarContactos(const ContactoEmail contactos[], int numContactos) {
     }
 }
 
+void mostrarContactosOrdenadosPorDominio(ContactoEmail contactos[], int numContactos) {
+    if (numContactos == 0) {
+        cout << "No hay contactos para mostrar.\n";
+        return;
+    }
+
+    for (int i = 0; i < numContactos - 1; i++) {
+        for (int j = i + 1; j < numContactos; j++) {
+            char *dominioA = strchr(contactos[i].email, '@');
+            char *dominioB = strchr(contactos[j].email, '@');
+
+            if (dominioA && dominioB) {
+                if (strcmp(dominioA, dominioB) > 0) {
+                    ContactoEmail temp = contactos[i];
+                    contactos[i] = contactos[j];
+                    contactos[j] = temp;
+                }
+            }
+        }
+    }
+
+    mostrarContactos(contactos, numContactos);
+}
+
+
+
+
 int main() {
     ContactoEmail contactos[100]; 
     int numContactos = 0;
@@ -104,6 +132,12 @@ int main() {
 			 case 3:
                 mostrarContactos(contactos, numContactos);
                 break;	
+            case 4:
+                mostrarContactosOrdenadosPorDominio(contactos, numContactos);
+                break;  
+			case 5:
+                cout << "Saliendo del programa...\n";
+                break;		  
             default:
                 cout << "Opcion no valida. Intente de nuevo.\n";
                 break;
