@@ -39,6 +39,28 @@ void agregarContacto(ContactoEmail contactos[], int &numContactos) {
     cout << "Contacto agregado exitosamente.\n";
 }
 
+void eliminarContacto(ContactoEmail contactos[], int &numContactos) {
+    if (numContactos == 0) {
+        cout << "No hay contactos para eliminar.\n";
+        return;
+    }
+
+    int indice;
+    cout << "Ingrese el indice del contacto a eliminar (0 a " << numContactos - 1 << "): ";
+    cin >> indice;
+
+    if (indice < 0 || indice >= numContactos) {
+        cout << "Índice inválido.\n";
+        return;
+    }
+
+    for (int i = indice; i < numContactos - 1; i++) {
+        contactos[i] = contactos[i + 1];
+    }
+    numContactos--;
+    cout << "Contacto eliminado exitosamente.\n";
+}
+
 int main() {
     ContactoEmail contactos[100]; 
     int numContactos = 0;
@@ -58,6 +80,9 @@ int main() {
             case 1:
                 agregarContacto(contactos, numContactos);
                 break;
+            case 2:
+                eliminarContacto(contactos, numContactos);
+				break;    
             default:
                 cout << "Opcion no valida. Intente de nuevo.\n";
                 break;
